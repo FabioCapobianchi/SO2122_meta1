@@ -12,7 +12,7 @@ int main(int argc, char **argv){
   char frase[50];
 
   printf("digite os sintomas:\n");
-  //scanf("%[^\n]",frase);
+  
 
   id=fork();
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 
   wait(NULL);
 }
-  
+
 
 return 0;
 }
