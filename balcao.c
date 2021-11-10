@@ -27,9 +27,7 @@ int main(int argc, char **argv){
 
     execl("classificador", "classificador",NULL);
 
-  }
-  //printf("digite os sintomas:\n");
-  //scanf("%[^\n]",frase);
+  }else{
 
   dup(cla_to_bal[0]);
   close(cla_to_bal[0]);
@@ -38,12 +36,10 @@ int main(int argc, char **argv){
   dup(bal_to_cla[1]);
   close(bal_to_cla[1]);
   close(bal_to_cla[0]);
-  //printf("%s",frase);/////////////////
-  //scanf("%[^\n]",frase);
-  //close(0);
-  wait(NULL);
 
-printf("%s",frase);
+  wait(NULL);
+}
+  
 
 return 0;
 }
