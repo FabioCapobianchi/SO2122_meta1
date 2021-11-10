@@ -11,8 +11,8 @@ int main(int argc, char **argv){
   int id;
   char frase[50];
 
-  printf("digite os sintomas:\n");
-  
+  printf("insira os sintomas:\n");
+
 
   id=fork();
 
