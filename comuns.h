@@ -10,7 +10,7 @@
 #include <ctype.h>
 
 #define  BALC_FIFO "balc_fifo"
-#define  CLIENT_FIFO "utent_%d_fifo"
+#define  CLIENT_FIFO "cliente_%d_fifo"
 #define  MEDIC_FIFO "medic_%d_fifo"
 
 #define  TAM_MAX 50
@@ -40,3 +40,6 @@ struct medico{//Medico
   char pr[TAM_MAX];
   medic next;
 };
+
+int Verifica_cliente(utent c1, char cname[]);
+utent criaCliente(utent c1, utent_t copia);
