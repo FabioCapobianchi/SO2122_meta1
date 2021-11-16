@@ -17,8 +17,9 @@ int main(int argc, char **argv){
   char c_fifo_fname[50];
   char m_fifo_fname[50];
 
+
 ///////////////////////////
-fprintf(stdout,"\nBalcao de atendimento\n");
+/*fprintf(stdout,"\nBalcao de atendimento\n");
 res = mkfifo(BALC_FIFO, 0777);
 if (res == -1){
 perror("\nmkfifo do FIFO Balcao deu erro");
@@ -83,7 +84,7 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
          fprintf(stderr,"\nFIFO utente fechado\n");
          }
 
-}
+}*/
 ////////////////////////////
 
   printf("Insira os sintomas:\n");
