@@ -10,7 +10,7 @@ int main(int argc, char **argv){
   int bal_to_cla[2];
   int cla_to_bal[2];
   pipe(bal_to_cla);
-  pipe(cla_to_bal);
+  pipe(cla_to_bal);//
   int id,res;
   utent_t utent;
   balcao_t balc;
