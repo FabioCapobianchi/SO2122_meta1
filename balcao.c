@@ -44,7 +44,7 @@ if(res < sizeof(utent)){
   continue;
 }
 
-fprintf(stderr,"\nRecebido de %s sintoma %s",utent.nome, utent.palavra);
+fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
 
  if(!strcasecmp(utent.palavra, "fimb")){
 
