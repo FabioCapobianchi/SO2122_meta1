@@ -1,5 +1,5 @@
-export BALC_FIFO='balc_fifo'
-export CLIENT_	FIFO='clinte_%d_fifo'
+#export BALC_FIFO='balc_fifo'
+#export CLIENT_	FIFO='clinte_%d_fifo'
 
 all:
 	gcc -g -Wall -o balcao balcao.c
@@ -11,6 +11,8 @@ cliente:
 	gcc -c cliente.c
 medico:
 	gcc -c medico.c
+comuns:
+	gcc -c comuns.c
 clean:
 	$(RM)balcao balcao.o
 	$(RM)cliente cliente.o

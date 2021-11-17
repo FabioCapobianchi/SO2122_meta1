@@ -1,9 +1,9 @@
 
 #include "comuns.h"
 #include <signal.h>
+#include <unistd.h>
 
-
-int main(int argc, char **argv){
+int main(int argc, char **argv, char **envp){
 
 int b_fifo_fd;
 int p_fifo_fd;
@@ -16,6 +16,9 @@ char m_fifo_fname[25];
 int read_res;
 //int flag = 0;
 
+setenv("CLIENT_FIFO", "cliente_%d_fifo", 1);
+setenv("BALC_FIFO", "balc_fifo", 1);
+
  while(argc < 2){
    fprintf(stdout,"Faltam parametros!!!.\n Ex: ./utente <nome utente>\n");
    exit(EXIT_FAILURE);
@@ -24,7 +27,7 @@ int read_res;
 //Cria o FIFO do utente
 strcpy(utente.nome,argv[1]);
 utente.pid_utent = getpid();
-sprintf(p_fifo_fname, getenv('CLIENT_FIFO'), utente.pid_utent);
+sprintf(p_fifo_fname, getenv("CLIENT_FIFO"), utente.pid_utent);
 
 if(mkfifo(p_fifo_fname, 0777) == -1){
 perror("\nmkfifo do FIFO utente deu erro");
@@ -33,7 +36,7 @@ exit(EXIT_FAILURE);
 
 fprintf(stderr,"\nFIFO do utente criado");
 
-b_fifo_fd = open(getenv('BALC_FIFO'), O_WRONLY);
+b_fifo_fd = open(getenv("BALC_FIFO"), O_WRONLY);
 if(b_fifo_fd == -1){
  fprintf(stderr, "\nO Balcao não esta a correr\n");
  unlink(p_fifo_fname);
@@ -91,7 +94,7 @@ if(read_res == sizeof(balcao)){
     else
       printf("\nSem resposta do balcao");
 
-    sprintf(m_fifo_fname, getenv('CLIENT_FIFO'), medic.pid_medic);
+    sprintf(m_fifo_fname, getenv("CLIENT_FIFO"), medic.pid_medic);
 
     m_fifo_fd = open(m_fifo_fname, O_WRONLY);
     if(m_fifo_fd == -1){

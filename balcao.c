@@ -1,11 +1,16 @@
 #include "comuns.h"
 #include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int b_fifo_fd;
 int c_fifo_fd;
 int m_fifo_fd;
 
-int main(int argc, char **argv){
+int main(int argc, char **argv, char **envp){
+
+setenv("BALC_FIFO", "balc_fifo", 1);
+setenv("CLIENT_FIFO", "cliente_%d_fifo", 1);
 
   int bal_to_cla[2];
   int cla_to_bal[2];
@@ -17,10 +22,9 @@ int main(int argc, char **argv){
   char c_fifo_fname[50];
   char m_fifo_fname[50];
 
-
 ///////////////////////////
-/*fprintf(stdout,"\nBalcao de atendimento\n");
-res = mkfifo(BALC_FIFO, 0777);
+fprintf(stdout,"\nBalcao de atendimento\n");
+res = mkfifo(getenv("BALC_FIFO"), 0777);
 if (res == -1){
 perror("\nmkfifo do FIFO Balcao deu erro");
 exit(EXIT_FAILURE);
@@ -28,7 +32,7 @@ exit(EXIT_FAILURE);
 fprintf(stderr, "\nFIFO Balcao criado");
 
 
-b_fifo_fd = open(BALC_FIFO, O_RDWR);
+b_fifo_fd = open(getenv("BALC_FIFO"), O_RDWR);
 if (b_fifo_fd == -1){
 perror("\nmkErro ao abrir FIFO balcao(RDWR/blocking)");
 exit(EXIT_FAILURE);
@@ -50,7 +54,7 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
  if(!strcasecmp(utent.palavra, "fimb")){
 
  close(b_fifo_fd);
-   unlink(BALC_FIFO);
+   unlink(getenv("BALC_FIFO"));
    //exit(EXIT_SUCCESS);
    break;
  }
@@ -65,7 +69,7 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
   balc.pid = utent.pid_utent;
   fprintf(stderr, "\nutente %s sintoma %s\n",balc.pnome, balc.palavra);
 
- sprintf(c_fifo_fname, CLIENT_FIFO, utent.pid_utent);
+ sprintf(c_fifo_fname, getenv("CLIENT_FIFO"), utent.pid_utent);
 
  c_fifo_fd = open(c_fifo_fname, O_WRONLY);
 
@@ -84,7 +88,7 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
          fprintf(stderr,"\nFIFO utente fechado\n");
          }
 
-}*/
+}
 ////////////////////////////
 
   printf("Insira os sintomas:\n");
