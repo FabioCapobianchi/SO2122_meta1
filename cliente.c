@@ -14,7 +14,7 @@ medic_t  medic;
 char p_fifo_fname[25];
 char m_fifo_fname[25];
 int read_res;
-//int flag = 0;
+
 
  while(argc < 2){
    fprintf(stdout,"Faltam parametros!!!.\n Ex: ./utente <nome utente>\n");
@@ -24,7 +24,9 @@ int read_res;
 //Cria o FIFO do utente
 strcpy(utente.nome,argv[1]);
 utente.pid_utent = getpid();
-sprintf(p_fifo_fname, CLIENT_FIFO, utente.pid_utent);
+////sprintf(p_fifo_fname, CLIENT_FIFO, utente.pid_utent);
+sprintf(p_fifo_fname, getenv("CLIENT_FIFO"), utente.pid_utent);
+
 
 if(mkfifo(p_fifo_fname, 0777) == -1){
 perror("\nmkfifo do FIFO utente deu erro");
@@ -33,14 +35,16 @@ exit(EXIT_FAILURE);
 
 fprintf(stderr,"\nFIFO do utente criado");
 
-b_fifo_fd = open(BALC_FIFO, O_WRONLY);
+/////b_fifo_fd = open(BALC_FIFO, O_WRONLY);
+b_fifo_fd = open(getenv("BALC_FIFO"), O_WRONLY);
+
 if(b_fifo_fd == -1){
  fprintf(stderr, "\nO Balcao não esta a correr\n");
  unlink(p_fifo_fname);
  exit(EXIT_FAILURE);
 }
  fprintf(stderr,"\nFIFO do Balcao aberto WRITE / BLOCKING");
- //
+
 
  c_fifo_fd = open(p_fifo_fname, O_RDWR);
  if(c_fifo_fd == -1){
@@ -58,10 +62,12 @@ if(b_fifo_fd == -1){
  while(1){
 
 printf("\nSr/a %s digite os sintomas: >",argv[1]);
-scanf("%s",utente.palavra);
-//fgets(utente.palavra,50,stdin);
-if(!strcasecmp(utente.palavra,"fim") || !strcasecmp(utente.palavra,"fimb")){
+//scanf("%s",utente.palavra);
+fgets(utente.palavra, TAM_MAX, stdin);
+
+if(!strcmp(utente.palavra,"fim\n") || !strcmp(utente.palavra,"fimb\n")){
 write(b_fifo_fd, &utente, sizeof(utente));
+unlink(p_fifo_fname);
 break;
 }
 // B) Envia ao balcao
@@ -77,8 +83,8 @@ if(read_res == sizeof(balcao)){
   printf("\nSem resposta do balcao" "[bytes lidos: %d]", read_res);
 }
 
-};
-   
+}
+
 close(c_fifo_fd);
 close(b_fifo_fd);
 unlink(p_fifo_fname);

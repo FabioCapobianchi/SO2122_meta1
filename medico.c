@@ -24,7 +24,8 @@ int res;
   strcpy(medic.mnome,argv[1]);
   strcpy(medic.espec,argv[2]);
     medic.pid_medic = getpid();
-    sprintf(m_fifo_fname, MEDIC_FIFO, medic.pid_medic);
+    ///sprintf(m_fifo_fname, MEDIC_FIFO, medic.pid_medic);
+    sprintf(m_fifo_fname, getenv("MEDIC_FIFO"), medic.pid_medic);
 
     if(mkfifo(m_fifo_fname, 0777) == -1){
       perror("\nmkfifo do FIFO medico deu erro");
@@ -35,7 +36,9 @@ printf("ola\n");
 fprintf(stderr,"\nFIFO do medico criado");
 
 //abre o FIFO do balcao WRITE / BLOCKING!!!!!
-  b_fifo_fd = open(BALC_FIFO, O_WRONLY);
+  //b_fifo_fd = open(BALC_FIFO, O_WRONLY);
+  b_fifo_fd = open(getenv("MEDIC_FIFO"), O_WRONLY);
+
     if(b_fifo_fd == -1){
       fprintf(stderr, "\nO Balcao não esta a correr\n");
       unlink(m_fifo_fname);
@@ -73,7 +76,7 @@ fprintf(stderr,"\nFIFO do medico criado");
    //strcpy(p_fifo_fname,utente.nome);
 
 while(1){
-  sprintf(p_fifo_fname, CLIENT_FIFO, utente.pid_utent);
+  sprintf(p_fifo_fname, getenv("MEDIC_FIFO"), utente.pid_utent);
 
   p_fifo_fd = open(p_fifo_fname, O_WRONLY);
 

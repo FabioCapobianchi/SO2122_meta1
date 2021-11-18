@@ -9,9 +9,9 @@
 #include <sys/stat.h>
 #include <ctype.h>
 
-#define  BALC_FIFO "balc_fifo"
-#define  CLIENT_FIFO "cliente_%d_fifo"
-#define  MEDIC_FIFO "medic_%d_fifo"
+// #define  BALC_FIFO "balc_fifo"
+// #define  CLIENT_FIFO "cliente_%d_fifo"
+// #define  MEDIC_FIFO "medic_%d_fifo"
 
 #define  TAM_MAX 50
 #define  SINT_MAX 8
