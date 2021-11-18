@@ -1,9 +1,9 @@
 
 #include "comuns.h"
 #include <signal.h>
+#include <unistd.h>
 
-
-int main(int argc, char **argv){
+int main(int argc, char **argv, char **envp){
 
 int b_fifo_fd;
 int c_fifo_fd;
@@ -15,6 +15,9 @@ char p_fifo_fname[25];
 char m_fifo_fname[25];
 int read_res;
 
+
+setenv("CLIENT_FIFO", "cliente_%d_fifo", 1);
+setenv("BALC_FIFO", "balc_fifo", 1);
 
  while(argc < 2){
    fprintf(stdout,"Faltam parametros!!!.\n Ex: ./utente <nome utente>\n");
