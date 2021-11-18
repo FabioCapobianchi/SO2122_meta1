@@ -18,21 +18,21 @@ int main(int argc, char **argv){
   char m_fifo_fname[50];
 
 ///////////////////////////
-fprintf(stdout,"\nBalcao de atendimento\n");
-res = mkfifo(BALC_FIFO, 0777);
-if (res == -1){
-perror("\nmkfifo do FIFO Balcao deu erro");
-exit(EXIT_FAILURE);
+fprintf(stdout,"\nMEDICALso\n");
+  res = mkfifo(BALC_FIFO, 0777);
+  if (res == -1){
+    perror("\nNao foi possivel abrir o Balcao");
+    exit(EXIT_FAILURE);
 }
-fprintf(stderr, "\nFIFO Balcao criado");
+fprintf(stderr, "\nBalcao de Atendimento criado\n");
 
 
 b_fifo_fd = open(BALC_FIFO, O_RDWR);
 if (b_fifo_fd == -1){
-perror("\nmkErro ao abrir FIFO balcao(RDWR/blocking)");
+perror("\nErro ao abrir Balcao");
 exit(EXIT_FAILURE);
 }
- fprintf(stderr, "\nFIFO Balcao aberto para READ (+WRITE) bloqueante");
+ fprintf(stderr, "\nBom Dia\n Balcao aberto para atendimento");
 
  memset(utent.palavra, '\0', TAM_MAX);
 
@@ -84,8 +84,8 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
          }
 
 }
-////////////////////////////
-
+//////////////////////////
+  fprintf(stdout,"\nBalcao de atendimento\n");
   printf("Insira os sintomas:\n");
 
 
@@ -114,7 +114,7 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
 
   wait(NULL);
 
-  printf("Aqui");
+
 }
 
 

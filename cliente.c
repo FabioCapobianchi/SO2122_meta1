@@ -6,7 +6,7 @@
 int main(int argc, char **argv){
 
 int b_fifo_fd;
-int p_fifo_fd;
+int c_fifo_fd;
 int m_fifo_fd;
 utent_t utente;
 balcao_t balcao;
@@ -42,10 +42,10 @@ if(b_fifo_fd == -1){
  fprintf(stderr,"\nFIFO do Balcao aberto WRITE / BLOCKING");
  //
 
- p_fifo_fd = open(p_fifo_fname, O_RDWR);
- if(p_fifo_fd == -1){
+ c_fifo_fd = open(p_fifo_fname, O_RDWR);
+ if(c_fifo_fd == -1){
  perror("\nErro ao abrir o FIFO do utente");
- close(p_fifo_fd);
+ close(c_fifo_fd);
  unlink(p_fifo_fname);
  exit(EXIT_FAILURE);
  }
@@ -69,7 +69,7 @@ write(b_fifo_fd, &utente, sizeof(utente));
 
 // c) recebe do balcao//////////////////////////////////
 
-read_res = read(p_fifo_fd, &balcao, sizeof(balcao));
+read_res = read(c_fifo_fd, &balcao, sizeof(balcao));
 if(read_res == sizeof(balcao)){
   printf("\nNome -> %s Sintoma -> %s PID -> %d" , balcao.pnome, balcao.palavra,balcao.pid);
    //flag = 1;
@@ -78,37 +78,8 @@ if(read_res == sizeof(balcao)){
 }
 
 };
-
-   while(1){
-    read_res = read(p_fifo_fd, &medic, sizeof(medic));
-
-     if(!strcasecmp(utente.palavra,"adeus")){
-    break;
-    }
-
-    if(read_res == sizeof(medic))
-      printf("\nMensagem Dr/a %s %s %s: \n", medic.mnome, medic.espec, medic.pr);
-    else
-      printf("\nSem resposta do balcao");
-
-    sprintf(m_fifo_fname, CLIENT_FIFO, medic.pid_medic);
-
-    m_fifo_fd = open(m_fifo_fname, O_WRONLY);
-    if(m_fifo_fd == -1){
-    perror("\nErro ao abrir o FIFO do medico");
-    close(m_fifo_fd);
-    unlink(m_fifo_fname);
-    exit(EXIT_FAILURE);
-  }
-    scanf("%[^\n]",utente.palavra);
-    write(m_fifo_fd, &utente, sizeof(utente));
-    if(!strcasecmp(utente.palavra,"adeus")){
-      break;
-    }
-
-  }
-
-close(p_fifo_fd);
+   
+close(c_fifo_fd);
 close(b_fifo_fd);
 unlink(p_fifo_fname);
 return 0;
