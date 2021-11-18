@@ -23,20 +23,12 @@ setenv("CLIENT_FIFO", "cliente_%d_fifo", 1);
   char m_fifo_fname[50];
 
 ///////////////////////////
-<<<<<<< HEAD
 fprintf(stdout,"\nMEDICALso\n");
   ////res = mkfifo(BALC_FIFO, 0777);
   res = mkfifo(getenv("BALC_FIFO"), 0777);
   if (res == -1){
     perror("\nNao foi possivel abrir o Balcao");
     exit(EXIT_FAILURE);
-=======
-fprintf(stdout,"\nBalcao de atendimento\n");
-res = mkfifo(getenv("BALC_FIFO"), 0777);
-if (res == -1){
-perror("\nmkfifo do FIFO Balcao deu erro");
-exit(EXIT_FAILURE);
->>>>>>> 93e96ee1413897260e4a88d583f5e101ea17fefd
 }
 fprintf(stderr, "\nBalcao de Atendimento criado\n");
 
@@ -44,10 +36,6 @@ fprintf(stderr, "\nBalcao de Atendimento criado\n");
 ////b_fifo_fd = open(BALC_FIFO, O_RDWR);
 b_fifo_fd = open(getenv("BALC_FIFO"), O_RDWR);
 
-<<<<<<< HEAD
-=======
-b_fifo_fd = open(getenv("BALC_FIFO"), O_RDWR);
->>>>>>> 93e96ee1413897260e4a88d583f5e101ea17fefd
 if (b_fifo_fd == -1){
 perror("\nErro ao abrir Balcao");
 exit(EXIT_FAILURE);
@@ -69,13 +57,9 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
  if(!strcasecmp(utent.palavra, "fimb\n")){
 
  close(b_fifo_fd);
-<<<<<<< HEAD
    ////unlink(BALC_FIFO);
    unlink("BALC_FIFO");
 
-=======
-   unlink(getenv("BALC_FIFO"));
->>>>>>> 93e96ee1413897260e4a88d583f5e101ea17fefd
    //exit(EXIT_SUCCESS);
    break;
  }
@@ -90,13 +74,9 @@ fprintf(stderr,"\nRecebido de %s sintoma %s\n",utent.nome, utent.palavra);
   balc.pid = utent.pid_utent;
   fprintf(stderr, "\nutente %s sintoma %s\n",balc.pnome, balc.palavra);
 
-<<<<<<< HEAD
  ////sprintf(c_fifo_fname, CLIENT_FIFO, utent.pid_utent);
 sprintf(c_fifo_fname, getenv("CLIENT_FIFO"), utent.pid_utent);
 
-=======
- sprintf(c_fifo_fname, getenv("CLIENT_FIFO"), utent.pid_utent);
->>>>>>> 93e96ee1413897260e4a88d583f5e101ea17fefd
 
  c_fifo_fd = open(c_fifo_fname, O_WRONLY);
 
